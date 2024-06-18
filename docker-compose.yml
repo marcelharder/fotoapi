@@ -1,0 +1,48 @@
+version: '3'
+services: 
+  
+  db:
+    image: mariadb:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+     MYSQL_ROOT_PASSWORD: example
+    networks: 
+      - internal-container-network
+    volumes:
+      - mariadb-data:/var/lib/mysql
+  
+  #hospital:
+  #  image: hospital_app:v17
+  #  restart: always
+  #  ports:
+  #    - 8103:80
+  #  networks: 
+  #    - internal-container-network
+  #  volumes:
+  #    - mariadb-data:/var/lib/mysql
+  #  depends_on:
+  #    - db
+  
+  
+ 
+  #tracPersonal:
+  #  image: sql_app:v90
+  #  ports:
+  #   - 8086:80
+  #  networks: 
+  #   - internal-container-network
+  #  volumes:
+  #   - sqldata:/root/.aspnet/DataProtection-Keys
+  #  depends_on: 
+  #   - db
+  #   - comservice
+  #   - onlinevalve_md
+
+volumes:
+ mariadb-data:
+ sqldata:
+networks:
+ internal-container-network:
+  driver: bridge
