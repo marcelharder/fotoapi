@@ -1,7 +1,6 @@
-using api.Services;
-using fotoservice.data;
-using fotoservice.data.interfaces;
-using HospitalService.Data;
+
+
+using fotoservice.data.helpers;
 
 namespace fotoservice.extensions;
 

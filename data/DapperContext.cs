@@ -1,6 +1,6 @@
-using MySqlConnector;
 
-namespace HospitalService.Data;
+
+namespace fotoservice.data;
 
     public class DapperContext
     {

@@ -11,6 +11,19 @@ global using System.ComponentModel.DataAnnotations;
 global using System.Data;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
+
+
 global using fotoservice.data.models;
+global using fotoservice.data;
+global using fotoservice.data.dtos;
+global using fotoservice.data.interfaces;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using MySqlConnector;
+
 
 
