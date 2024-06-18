@@ -2,10 +2,7 @@
 namespace fotoservice.data;
 public class UserRepo : IUsers
 {
-    public void AddUser(AppUser p)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public void Delete<T>(T entity) where T : class
     {

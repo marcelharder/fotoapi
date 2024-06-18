@@ -41,6 +41,37 @@ public class AccountController : BaseApiController
         return result;
     }
 
+    [HttpPost("register")]
+    public async Task<ActionResult<UserDto>> Register(UserForRegisterDto registerDto)
+    {
+        var user = await _manager.Users.SingleOrDefaultAsync(x => x.UserName == registerDto.UserName.ToLower());
+        if (user != null) { return BadRequest("User already exists ..."); }
+
+        user = new AppUser
+        {
+            UserName = registerDto.UserName.ToLower(),
+            Created = DateTime.Now,
+            LastActive = DateTime.Now,
+            PaidTill = DateTime.Now.AddDays(90),
+            Email = registerDto.Email.ToLower(),
+            Gender = "Male",
+        };
+
+        var result = await _manager.CreateAsync(user, registerDto.Password);
+        if (!result.Succeeded) { return BadRequest(result.Errors); }
+
+        var roleResult = await _manager.AddToRoleAsync(user, "Surgery");
+        if (!roleResult.Succeeded) { return BadRequest(roleResult.Errors); }
+
+        return new UserDto
+        {
+            UserName = user.UserName,
+            Token = await _ts.CreateToken(user),
+            UserId = user.Id,
+            paidTill = user.PaidTill
+        };
+    }
+
 
 
     [HttpPost("login")]
@@ -57,7 +88,7 @@ public class AccountController : BaseApiController
         {
             UserName = user.UserName,
             Token = await _ts.CreateToken(user),
-           UserId = user.Id,
+            UserId = user.Id,
             paidTill = user.PaidTill
         };
     }
