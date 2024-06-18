@@ -22,10 +22,10 @@ var app = builder.Build();
         try
         {
             var context = services.GetRequiredService<ApplicationDbContext>();
-            // var userManager = services.GetRequiredService<UserManager<AppUser>>();
-            // var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+            var userManager = services.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
             await context.Database.EnsureCreatedAsync();
-            // await Seed.SeedUsers(userManager, roleManager);
+            await Seed.SeedUsers(userManager, roleManager);
             //await Seed.SeedHospitals(context);
             //await Seed.SeedCountries(context);
             
