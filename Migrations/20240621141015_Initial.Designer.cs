@@ -11,7 +11,7 @@ using fotoservice.data;
 namespace fotoservice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618182716_Initial")]
+    [Migration("20240621141015_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -341,7 +341,7 @@ namespace fotoservice.Migrations
                         .IsRequired();
 
                     b.HasOne("fotoservice.data.models.AppUser", "User")
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId1");
 
                     b.Navigation("Role");
@@ -350,6 +350,11 @@ namespace fotoservice.Migrations
                 });
 
             modelBuilder.Entity("fotoservice.data.models.AppRole", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("fotoservice.data.models.AppUser", b =>
                 {
                     b.Navigation("UserRoles");
                 });

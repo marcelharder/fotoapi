@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace fotoservice.Migrations;
-
+namespace fotoservice.Migrations
+{
     /// <inheritdoc />
     public partial class Initial : Migration
     {
@@ -319,4 +319,4 @@ namespace fotoservice.Migrations;
                 name: "AspNetUsers");
         }
     }
-
+}

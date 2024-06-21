@@ -338,7 +338,7 @@ namespace fotoservice.Migrations
                         .IsRequired();
 
                     b.HasOne("fotoservice.data.models.AppUser", "User")
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId1");
 
                     b.Navigation("Role");
@@ -347,6 +347,11 @@ namespace fotoservice.Migrations
                 });
 
             modelBuilder.Entity("fotoservice.data.models.AppRole", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("fotoservice.data.models.AppUser", b =>
                 {
                     b.Navigation("UserRoles");
                 });

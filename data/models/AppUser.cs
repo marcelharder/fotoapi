@@ -11,6 +11,8 @@ public class AppUser: IdentityUser<int>
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
         public DateTime PaidTill { get; set; }
+        public ICollection<AppUserRole>? UserRoles { get; set; }
+
        
     }
 
