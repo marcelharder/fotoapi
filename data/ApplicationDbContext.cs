@@ -1,6 +1,7 @@
 
 
 
+using api.data.models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace fotoservice.data;
@@ -20,6 +21,7 @@ namespace fotoservice.data;
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Category> Categories { get; set; }
       
 
 

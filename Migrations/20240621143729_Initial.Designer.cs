@@ -11,7 +11,7 @@ using fotoservice.data;
 namespace fotoservice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240621141015_Initial")]
+    [Migration("20240621143729_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -104,6 +104,25 @@ namespace fotoservice.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("api.data.models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("fotoservice.data.models.AppRole", b =>
