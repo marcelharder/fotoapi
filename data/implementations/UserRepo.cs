@@ -1,5 +1,4 @@
-
-namespace fotoservice.data;
+namespace fotoservice.data.implementations;
 public class UserRepo : IUsers
 {
     

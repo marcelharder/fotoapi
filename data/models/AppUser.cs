@@ -1,5 +1,3 @@
-
-
 namespace fotoservice.data.models;
 public class AppUser: IdentityUser<int>
 
@@ -7,6 +5,7 @@ public class AppUser: IdentityUser<int>
         public byte[]? PasswordSalt { get; set; }
         public string? Gender { get; set; }
         public string? PhotoUrl { get; set; }
+        public string? AllowedToSee { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }

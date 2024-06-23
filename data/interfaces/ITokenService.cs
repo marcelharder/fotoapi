@@ -1,4 +1,3 @@
-
 namespace fotoservice.data.interfaces;
 
     public interface ITokenService

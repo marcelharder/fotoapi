@@ -1,5 +1,3 @@
-
-
 namespace fotoservice.data.models;
 
     public class AppRole : IdentityRole<int>

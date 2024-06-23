@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-
-namespace fotoservice.Controllers;
+namespace api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

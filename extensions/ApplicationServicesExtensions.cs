@@ -1,6 +1,5 @@
-
-
 using fotoservice.data.helpers;
+using fotoservice.data.implementations;
 
 namespace fotoservice.extensions;
 
@@ -35,7 +34,7 @@ namespace fotoservice.extensions;
           
             services.AddSingleton<DapperContext>();
             //services.AddScoped<reportMapper>();
-            services.AddScoped<IUsers,UserRepo>();
+            services.AddScoped<UserRepo,UserRepo>();
             services.AddScoped<ITokenService,TokenService>();
             //services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             return services;

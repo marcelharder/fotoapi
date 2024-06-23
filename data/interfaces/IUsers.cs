@@ -1,4 +1,4 @@
-  namespace fotoservice.data;
+  namespace fotoservice.data.interfaces;
   
   public interface IUsers {
   

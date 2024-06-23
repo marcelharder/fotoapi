@@ -11,6 +11,7 @@ global using System.ComponentModel.DataAnnotations;
 global using System.Data;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 global using fotoservice.data.models;

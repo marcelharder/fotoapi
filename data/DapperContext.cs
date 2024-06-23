@@ -1,5 +1,3 @@
-
-
 namespace fotoservice.data;
 
     public class DapperContext

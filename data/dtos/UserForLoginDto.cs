@@ -1,5 +1,3 @@
-
-
 namespace fotoservice.data.dtos;
 
     public class UserForLoginDto
