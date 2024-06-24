@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace fotoservice.data.models;
 
 public class Image
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public required string Id { get; set; }
     public required string ImageUrl { get; set; }
     public required int YearTaken { get; set; }

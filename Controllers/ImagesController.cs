@@ -1,3 +1,7 @@
+using api.helpers;
+using fotoservice.api.helpers;
+using fotoservice.extensions;
+
 namespace api.Controllers;
 
 public class ImagesController : BaseApiController
@@ -6,22 +10,31 @@ public class ImagesController : BaseApiController
     private static readonly HttpClient client = new HttpClient();
     
     private readonly IConfiguration _config;
-    private IUsers _users;
+    private IImage _image;
     
 
     public ImagesController(
         IConfiguration config,
-        IUsers users)
+        IImage image)
     {
         _config = config;
-        _users = users;
+        _image = image;
     }
 
     //get a Paged list of images that the user can see
-    [HttpGet("getImages/{{userId}}")]
-    public async Task<ActionResult<List<ImageDto>>> getImages(int UserId)
+    [HttpGet("getImages")]
+    public async Task<ActionResult<PagedList<ImageDto>>> getImages([FromQuery]ImageParams imgP)
     {
-        var images = await _users.getImages();
-        return images;
+        var plImages = await _image.getImages(imgP);
+        Response.AddPaginationHeader(new PaginationHeader(plImages.CurrentPage, plImages.PageSize, plImages.TotalCount, plImages.TotalPages));
+        return Ok(plImages);
     }
+
+
+
+     [HttpPost("addImage")]
+     public async Task<ActionResult<int>> addImage(ImageDto imagedto){
+
+        return await _image.addImage(imagedto);
+     }
 }

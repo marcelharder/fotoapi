@@ -1,7 +1,6 @@
 namespace fotoservice.data.dtos;
 public class ImageDto
 {
-    public required string Id { get; set; }
     public required string ImageUrl { get; set; }
     public required int YearTaken { get; set; }
     public required string Location { get; set; }

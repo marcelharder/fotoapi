@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <Category>
+      <ID>1</ID>
+      <Description>Amersfoort</Description>
+  </Category>
+   <Category>
+      <ID>2</ID>
+      <Description>Cornelis Tromp</Description>
+  </Category>
+   <Category>
+      <ID>3</ID>
+      <Description>Jong Beatrix</Description>
+  </Category>
+   <Category>
+      <ID>4</ID>
+      <Description>Mallorca</Description>
+  </Category>
+   <Category>
+      <ID>5</ID>
+      <Description>Portugal 1992</Description>
+  </Category>
+</root>

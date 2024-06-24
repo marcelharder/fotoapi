@@ -1,3 +1,6 @@
+using api.data.implementations;
+using fotoservice.api.data.interfaces;
+using fotoservice.api.helpers;
 using fotoservice.data.helpers;
 using fotoservice.data.implementations;
 
@@ -34,9 +37,11 @@ namespace fotoservice.extensions;
           
             services.AddSingleton<DapperContext>();
             //services.AddScoped<reportMapper>();
-            services.AddScoped<UserRepo,UserRepo>();
+            services.AddScoped<IUsers,UserRepo>();
+            services.AddScoped<IImage,ImageImplementation>();
             services.AddScoped<ITokenService,TokenService>();
-            //services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddScoped<IConfig,ConfigImpl>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             return services;
         }
     }

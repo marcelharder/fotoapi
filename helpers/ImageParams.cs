@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace fotoservice.api.helpers;
 
-namespace api.helpers
-{
-    public class ImageParams
+public class ImageParams
     {
         private const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
@@ -18,4 +13,3 @@ namespace api.helpers
         public int Id { get; set; } 
         public required string Category { get; set; } 
     }
-}
