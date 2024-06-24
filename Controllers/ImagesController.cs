@@ -31,8 +31,6 @@ public class ImagesController : BaseApiController
         return Ok(plImages);
     }
 
-
-
      [HttpPost("addImage")]
      public async Task<ActionResult<int>> addImage(ImageDto imagedto){
 
