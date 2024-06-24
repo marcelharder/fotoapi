@@ -11,5 +11,5 @@ public class ImageParams
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value;}
         }
         public int Id { get; set; } 
-        public required string Category { get; set; } 
+        public required int Category { get; set; } 
     }

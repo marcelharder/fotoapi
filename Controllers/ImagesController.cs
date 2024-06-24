@@ -1,6 +1,7 @@
 using api.helpers;
 using fotoservice.api.helpers;
 using fotoservice.extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers;
 
@@ -36,5 +37,16 @@ public class ImagesController : BaseApiController
      public async Task<ActionResult<int>> addImage(ImageDto imagedto){
 
         return await _image.addImage(imagedto);
+     }
+
+     [HttpGet("findImage/{Id}")]
+     public async Task<ActionResult<ImageDto>> findImage(string Id){
+        return await _image.findImage(Id);
+     }
+
+    [Authorize]
+    [HttpGet("findImagesByUser/{email}")]
+     public async Task<ActionResult<List<ImageDto>>> findImagesByUser(string email){
+        return await _image.findImagesByUser(email);
      }
 }

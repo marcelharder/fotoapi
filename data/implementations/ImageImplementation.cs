@@ -16,11 +16,23 @@ namespace api.data.implementations
 
         public async Task<PagedList<ImageDto>> getImages(ImageParams imgP)
         {
-            // get images from dapper query
+            IQueryable<ImageDto> images;
 
-            var images = _context.Images
-            .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
-            .AsNoTracking();
+
+            if (imgP.Category == 1)
+            {
+                images = _context.Images
+                         .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                         .AsNoTracking();
+            }
+            else
+            {
+                images = _context.Images
+                       .Where(x => x.Category == imgP.Category)
+                       .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                       .AsNoTracking();
+            }
+
             return await PagedList<ImageDto>.CreateAsync(images, imgP.PageNumber, imgP.PageSize);
         }
 
@@ -33,6 +45,35 @@ namespace api.data.implementations
             return result;
         }
 
+        public async Task<ImageDto> findImage(string Id)
+        {
+            var selectedImage = await _context.Images
+                 .FirstOrDefaultAsync(x => x.Id == Id);
+            return _mapper.Map<ImageDto>(selectedImage);
+        }
 
+        public async Task<ActionResult<List<ImageDto>>> findImagesByUser(string email)
+        {
+            // get the categories that his user can see
+            string[] cararray = {};
+            IQueryable<ImageDto> images;
+            var l = new List<ImageDto>();
+
+            var selectedUser = _context.Users.Where(x => x.Email == email).FirstOrDefault();
+            
+            if(selectedUser != null){
+                var categories = selectedUser.AllowedToSee;
+                if(categories != null){cararray = categories.Split(",");}
+                }
+            foreach(string s in cararray){
+                 images = _context.Images
+                       .Where(x => x.Category == Convert.ToInt32(s))
+                       .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                       .AsNoTracking();
+
+                l.AddRange(await images.ToListAsync());
+            }
+            return l;
+        }
     }
 }

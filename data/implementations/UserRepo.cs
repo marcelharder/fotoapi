@@ -1,9 +1,16 @@
 using fotoservice.api.data.interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace fotoservice.data.implementations;
 public class UserRepo : IUsers
 {
-    
+        private readonly UserManager<AppUser> _userManager;
+
+    public UserRepo(UserManager<AppUser> userManager)
+    {
+            _userManager = userManager;
+        
+    }
 
     public void Delete<T>(T entity) where T : class
     {
@@ -18,6 +25,15 @@ public class UserRepo : IUsers
     public Task<AppUser> GetUser(int id)
     {
         throw new NotImplementedException();
+    }
+
+     public async Task<AppUser> GetUser(string email)
+    {
+         if (email != null) {
+            var result = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return result;
+            }
+            return null;
     }
 
     public Task<bool> GetUserLtk(int id)
