@@ -27,13 +27,14 @@ public class UserRepo : IUsers
         throw new NotImplementedException();
     }
 
-     public async Task<AppUser> GetUser(string email)
+     public async Task<AppUser> GetUserByMail(string email)
     {
          if (email != null) {
-            var result = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == email);
-            return result;
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null) { return user;}
             }
-            return null;
+           
+         return null;  
     }
 
     public Task<bool> GetUserLtk(int id)

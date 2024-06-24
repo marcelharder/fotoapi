@@ -1,5 +1,6 @@
 using api.helpers;
 using AutoMapper.QueryableExtensions;
+using fotoservice.api.data.interfaces;
 using fotoservice.api.helpers;
 
 namespace api.data.implementations
@@ -8,8 +9,10 @@ namespace api.data.implementations
     {
         private ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public ImageImplementation(ApplicationDbContext context, IMapper mapper)
+        private readonly IUsers _user;
+        public ImageImplementation(ApplicationDbContext context, IMapper mapper, IUsers user)
         {
+            _user = user;
             _mapper = mapper;
             _context = context;
         }
@@ -59,8 +62,9 @@ namespace api.data.implementations
             IQueryable<ImageDto> images;
             var l = new List<ImageDto>();
 
-            var selectedUser = _context.Users.Where(x => x.Email == email).FirstOrDefault();
-            
+            var selectedUser = await _user.GetUserByMail(email);
+
+          
             if(selectedUser != null){
                 var categories = selectedUser.AllowedToSee;
                 if(categories != null){cararray = categories.Split(",");}
