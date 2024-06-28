@@ -1,7 +1,11 @@
+using System.ComponentModel;
+
 namespace fotoservice.data.interfaces;
 
 public interface IConfig
     {
-        Task<List<String>> getCategories();
+        Task<List<CategoryDto>> getAllCategories();
+
+        Task<List<CategoryDto>> getAllowedCategories(string[] categoryIds);
     }
 

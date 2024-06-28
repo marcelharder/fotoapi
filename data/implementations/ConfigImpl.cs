@@ -20,18 +20,42 @@ public class ConfigImpl : IConfig
         _el = el;
     }
 
-    public async Task<List<string>> getCategories()
+    public async Task<List<CategoryDto>> getAllCategories()
     {
-        List<string> _result = new List<string>();
+        List<CategoryDto> _result = new List<CategoryDto>();
         IEnumerable<XElement> op = _el.Descendants("Category");
         await Task.Run(() =>
                    {
                        foreach (XElement s in op)
                        {
-                           if (s.Element("Description").Value != null) { _result.Add(s.Element("Description").Value); }
+
+                           if (s.Element("Description").Value != null) {
+                           _result.Add(new CategoryDto(
+                            
+                           ));
+
+
+                            // _result.Add(s.Element("Description").Value);
+                             
+                             
+                             
+                             
+                             
+                             
+                              }
                        }
                    }
         );
 return _result;
 }
+
+    public Task<List<CategoryDto>> getAllowedCategories(string[] categoryIds)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<List<CategoryDto>> IConfig.getAllCategories()
+    {
+        throw new NotImplementedException();
+    }
 }
