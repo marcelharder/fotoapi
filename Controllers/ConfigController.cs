@@ -24,6 +24,11 @@ public class ConfigController : BaseApiController
     [HttpGet("getAllowedCategories")]
     public async Task<IActionResult> AllowedCategories()
     {
+        // check if the user is identical to the loggedInUser
+        
+      /*    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (currentUserId != userId) return Unauthorized(); */
+        
         var result = await _config.getAllowedCategories();
         return Ok(result);
     }
