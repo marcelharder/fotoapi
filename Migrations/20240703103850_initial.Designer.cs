@@ -11,8 +11,8 @@ using fotoservice.data;
 namespace fotoservice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240624134519_catchanged")]
-    partial class catchanged
+    [Migration("20240703103850_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,6 +163,9 @@ namespace fotoservice.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Gender")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("KnownAS")
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("LastActive")

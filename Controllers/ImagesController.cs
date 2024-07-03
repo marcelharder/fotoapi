@@ -22,7 +22,7 @@ public class ImagesController : BaseApiController
         _image = image;
     }
 
-    //get a Paged list of images that the user can see
+    //get a Paged list of images per Category
     [HttpGet("getImages")]
     public async Task<ActionResult<PagedList<ImageDto>>> getImages([FromQuery]ImageParams imgP)
     {
@@ -42,9 +42,9 @@ public class ImagesController : BaseApiController
         return await _image.findImage(Id);
      }
 
-    [Authorize]
+   /*  [Authorize]
     [HttpGet("findImagesByUser/{email}")]
      public async Task<ActionResult<List<ImageDto>>> findImagesByUser(string email){
         return await _image.findImagesByUser(email);
-     }
+     } */
 }

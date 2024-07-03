@@ -6,6 +6,6 @@ public interface IConfig
     {
         Task<List<CategoryDto>> getAllCategories();
 
-        Task<List<CategoryDto>> getAllowedCategories(string[] categoryIds);
+        Task<List<CategoryDto>> getAllowedCategories();
     }
 

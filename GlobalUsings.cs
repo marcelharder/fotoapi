@@ -26,6 +26,10 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using MySqlConnector;
 global using AutoMapper;
+global using api.helpers;
+global using fotoservice.api.helpers;
+global using fotoservice.extensions;
+global using Microsoft.AspNetCore.Authorization;
 
 
 

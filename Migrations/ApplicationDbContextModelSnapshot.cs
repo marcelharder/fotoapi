@@ -162,6 +162,9 @@ namespace fotoservice.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("KnownAS")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime");
 
