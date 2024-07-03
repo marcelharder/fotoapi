@@ -80,5 +80,19 @@ public class ConfigImpl : IConfig
         return _result;
     }
 
+    public async Task<string> getDescriptionFromCategory(int category)
+    {
+        var result = "";
+         IEnumerable<XElement> op = _el.Descendants("Category");
+         await Task.Run(() =>
+                   {
+                      
+                      var selectedElement = op.FirstOrDefault(t => t.Element("category").Value == category.ToString());
+                      result = selectedElement.Element("Description").Value;
+                       
 
+                   }
+        );
+        return result;
+    }
 }

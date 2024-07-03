@@ -33,5 +33,17 @@ public class ConfigController : BaseApiController
         return Ok(result);
     }
 
+     [HttpGet("getDescription/{category}")]
+    public async Task<IActionResult> getDescription(int category)
+    {
+        // check if the user is identical to the loggedInUser
+        
+      /*    var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (currentUserId != userId) return Unauthorized(); */
+        
+        var result = await _config.getDescriptionFromCategory(category);
+        return Ok(result);
+    }
+
 
 }
