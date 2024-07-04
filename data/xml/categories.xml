@@ -13,17 +13,17 @@
    <Category>
       <ID>4</ID>
       <Description>Baden-baden</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/baden-baden/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>5</ID>
       <Description>Birkenheuvelweg</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/birkenheuvelweg/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>6</ID>
       <Description>Blitterswijk</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/blitterswijk/0.jpg</MainPhoto>
   </Category>
   <Category>
       <ID>7</ID>
