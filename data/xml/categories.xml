@@ -28,12 +28,12 @@
   <Category>
       <ID>7</ID>
       <Description>Cornelis Tromp</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/cornelisTromp/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>8</ID>
       <Description>de Beaufortlaan</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/deBeaufortlaan/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>9</ID>
@@ -188,12 +188,12 @@
    <Category>
       <ID>39</ID>
       <Description>Wirixstraat 1959</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/Wirixstraat/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>40</ID>
       <Description>Wittelaan</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto></MainPhoto>
   </Category>
    <Category>
       <ID>41</ID>

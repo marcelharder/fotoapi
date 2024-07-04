@@ -13,8 +13,8 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
   
-  #hospital:
-  #  image: hospital_app:v17
+  #fotoservice:
+  #  image: foto_app:v1
   #  restart: always
   #  ports:
   #    - 8103:80
@@ -27,18 +27,7 @@ services:
   
   
  
-  #tracPersonal:
-  #  image: sql_app:v90
-  #  ports:
-  #   - 8086:80
-  #  networks: 
-  #   - internal-container-network
-  #  volumes:
-  #   - sqldata:/root/.aspnet/DataProtection-Keys
-  #  depends_on: 
-  #   - db
-  #   - comservice
-  #   - onlinevalve_md
+  
 
 volumes:
  mariadb-data:
