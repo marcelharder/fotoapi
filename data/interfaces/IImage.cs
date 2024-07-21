@@ -9,5 +9,5 @@ public interface IImage
 
         Task<int> addImage(ImageDto image);
         Task<ImageDto> findImage(string Id);
-    Task<ActionResult<List<ImageDto>>> findImagesByUser(string email);
+        Task<ActionResult<List<ImageDto>>> findImagesByUser(string email);
 }

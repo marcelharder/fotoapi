@@ -1,0 +1,42 @@
+[
+    {
+        "Id": "1",
+        "ImageUrl": "assets/dias/birkenheuvelweg/0.jpg",
+        "YearTaken": 1970,
+        "Location": "Birkenheuvelweg",
+        "Familie": "1",
+        "Category": 5,
+        "Quality": "1",
+        "Series": "",
+        "Spare1": "",
+        "Spare2": "",
+        "Spare3": ""
+    },
+    {
+        "Id": "2",
+        "ImageUrl": "assets/dias/birkenheuvelweg/1.jpg",
+        "YearTaken": 1987,
+        "Location": "Birkenheuvelweg",
+        "Familie": "1",
+        "Category": 5,
+        "Quality": "1",
+        "Series": "",
+        "Spare1": "",
+        "Spare2": "",
+        "Spare3": ""
+    },
+    {
+        "Id": "3",
+        "ImageUrl": "assets/dias/birkenheuvelweg/2.jpg",
+        "YearTaken": 1987,
+        "Location": "Birkenheuvelweg",
+        "Familie": "1",
+        "Category": 5,
+        "Quality": "1",
+        "Series": "",
+        "Spare1": "",
+        "Spare2": "",
+        "Spare3": ""
+    }
+   
+]
