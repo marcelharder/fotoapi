@@ -3,37 +3,37 @@
    <Category>
       <ID>2</ID>
       <Description>Amersfoort</Description>
-      <MainPhoto>assets/images/amersfoort/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/amersfoort/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>3</ID>
       <Description>Assen 1970</Description>
-      <MainPhoto>assets/images/assen/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/assen/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>4</ID>
       <Description>Baden-baden</Description>
-      <MainPhoto>assets/images/baden-baden/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/baden-baden/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>5</ID>
       <Description>Birkenheuvelweg</Description>
-      <MainPhoto>assets/images/birkenheuvelweg/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/birkenheuvelweg/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>6</ID>
       <Description>Blitterswijk</Description>
-      <MainPhoto>assets/images/blitterswijk/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/blitterswijk/0.jpg</MainPhoto>
   </Category>
   <Category>
       <ID>7</ID>
       <Description>Cornelis Tromp</Description>
-      <MainPhoto>assets/images/cornelisTromp/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/cornelisTromp/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>8</ID>
       <Description>de Beaufortlaan</Description>
-      <MainPhoto>assets/images/deBeaufortlaan/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/deBeaufortlaan/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>9</ID>
@@ -188,7 +188,7 @@
    <Category>
       <ID>39</ID>
       <Description>Wirixstraat 1959</Description>
-      <MainPhoto>assets/images/Wirixstraat/0.jpg</MainPhoto>
+      <MainPhoto>assets/dias/Wirixstraat/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>40</ID>
