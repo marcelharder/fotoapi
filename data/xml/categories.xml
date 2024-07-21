@@ -3,12 +3,12 @@
    <Category>
       <ID>2</ID>
       <Description>Amersfoort</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/amersfoort/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>3</ID>
       <Description>Assen 1970</Description>
-      <MainPhoto>0.jpg</MainPhoto>
+      <MainPhoto>assets/images/assen/0.jpg</MainPhoto>
   </Category>
    <Category>
       <ID>4</ID>

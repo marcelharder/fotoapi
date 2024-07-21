@@ -86,8 +86,10 @@ public class ConfigImpl : IConfig
          IEnumerable<XElement> op = _el.Descendants("Category");
          await Task.Run(() =>
                    {
+
+
                       
-                      var selectedElement = op.FirstOrDefault(t => t.Element("category").Value == category.ToString());
+                      var selectedElement = op.FirstOrDefault(t => t.Element("ID").Value == category.ToString());
                       result = selectedElement.Element("Description").Value;
                        
 
