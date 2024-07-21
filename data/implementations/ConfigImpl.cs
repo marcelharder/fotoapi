@@ -51,6 +51,10 @@ public class ConfigImpl : IConfig
         List<CategoryDto> _result = new List<CategoryDto>();
         // get the user that is loggedIn
         var loggedinUser = await _userManager.FindByNameAsync(_ht.HttpContext.User.Identity.Name);
+        
+        if(loggedinUser.AllowedToSee != null){
+        
+        
         List<int> catArray = loggedinUser.AllowedToSee.Split(',')
          .Select(t => int.Parse(t))
          .ToList();
@@ -74,7 +78,7 @@ public class ConfigImpl : IConfig
                        }
                    }
         );
-
+        }
 
 
         return _result;
