@@ -50,7 +50,7 @@ namespace api.data.implementations
             return await PagedList<ImageDto>.CreateAsync(images, imgP.PageNumber, imgP.PageSize);
         }
 
-        public async Task<int> addImage(ImageDto imagedto)
+        public async Task<int> addImage(Image imagedto)
         {
             var result = 1;
             var img = _mapper.Map<Image>(imagedto);
@@ -108,10 +108,10 @@ namespace api.data.implementations
             return l;
         }
 
-        public async Task<int> deleteImage(int id)
+        public async Task<int> deleteImage(string id)
         {
             var selectedImage = await _context.Images.FirstOrDefaultAsync(x =>
-                x.Id == id.ToString()
+                x.Id == id
             );
             if (selectedImage != null)
             {
@@ -133,5 +133,12 @@ namespace api.data.implementations
 
             return 1;
         }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+        
+
     }
 }
