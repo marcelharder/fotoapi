@@ -31,6 +31,13 @@ public class ImagesController : BaseApiController
         return Ok(plImages);
     }
 
+     [HttpGet("getImagesByCategory/{cat}")]
+    public async Task<ActionResult<List<ImageDto>>> getImagesByCat(int cat)
+    {
+        var plImages = await _image.getImagesByCategory(cat);
+        return Ok(plImages);
+    }
+
      [HttpPost("addImage")]
      public async Task<ActionResult<int>> addImage(ImageDto imagedto){
 
