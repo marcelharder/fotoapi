@@ -1,3 +1,4 @@
+using System.Globalization;
 using api.helpers;
 using AutoMapper.QueryableExtensions;
 using fotoservice.api.data.interfaces;
@@ -8,13 +9,22 @@ namespace api.data.implementations
     public class ImageImplementation : IImage
     {
         private ApplicationDbContext _context;
+        private UserManager<AppUser> _userManager;
+        private IHttpContextAccessor _ht;
         private readonly IMapper _mapper;
         private readonly IUsers _user;
-        public ImageImplementation(ApplicationDbContext context, IMapper mapper, IUsers user)
+        public ImageImplementation(ApplicationDbContext context,
+        IMapper mapper,
+        UserManager<AppUser> userManager,
+        IHttpContextAccessor ht,
+        IUsers user)
         {
             _user = user;
             _mapper = mapper;
             _context = context;
+            _userManager = userManager;
+            _ht = ht;
+
         }
 
         public async Task<PagedList<ImageDto>> getImages(ImageParams imgP)
@@ -58,25 +68,38 @@ namespace api.data.implementations
         public async Task<ActionResult<List<ImageDto>>> findImagesByUser(string email)
         {
             // get the categories that his user can see
-            string[] cararray = {};
+            string[] cararray = { };
             IQueryable<ImageDto> images;
             var l = new List<ImageDto>();
 
             var selectedUser = await _user.GetUserByMail(email);
 
-          
-            if(selectedUser != null){
+
+            if (selectedUser != null)
+            {
                 var categories = selectedUser.AllowedToSee;
-                if(categories != null){cararray = categories.Split(",");}
-                }
-            foreach(string s in cararray){
-                 images = _context.Images
-                       .Where(x => x.Category == Convert.ToInt32(s))
-                       .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
-                       .AsNoTracking();
+                if (categories != null) { cararray = categories.Split(","); }
+            }
+            foreach (string s in cararray)
+            {
+                images = _context.Images
+                      .Where(x => x.Category == Convert.ToInt32(s))
+                      .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                      .AsNoTracking();
 
                 l.AddRange(await images.ToListAsync());
             }
+            return l;
+        }
+
+        public async Task<ActionResult<List<ImageDto>>> getImagesByCategory(int category)
+        {
+            string[] cararray = { };
+            var l = new List<ImageDto>();
+            // get all the images from this category
+            var images =  await _context.Images.Where(x => x.Category == category).ToArrayAsync();
+            // return image DTO
+            foreach(Image im in images){l.Add(_mapper.Map<ImageDto>(im));}
             return l;
         }
     }

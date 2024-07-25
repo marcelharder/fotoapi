@@ -1,3 +1,4 @@
+using System.Globalization;
 using api.helpers;
 using fotoservice.api.helpers;
 
@@ -10,4 +11,6 @@ public interface IImage
         Task<int> addImage(ImageDto image);
         Task<ImageDto> findImage(string Id);
         Task<ActionResult<List<ImageDto>>> findImagesByUser(string email);
+
+        Task<ActionResult<List<ImageDto>>> getImagesByCategory( int category);
 }
