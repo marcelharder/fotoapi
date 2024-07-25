@@ -28,7 +28,7 @@ public class AccountController : BaseApiController
     }
 
     [HttpGet("checkIfUserExists/{email}")]
-    public async Task<int> userexists(string email)
+    public async Task<int> Userexists(string email)
     {
         var result = 0;
         var user = await _manager.Users.FirstOrDefaultAsync(x => x.Email == email);
@@ -89,7 +89,7 @@ public class AccountController : BaseApiController
     }
 
     [HttpPut("changePassword")]
-    public async Task<IActionResult> CChangePwd([FromBody] ChangePasswordDto ufl)
+    public async Task<IActionResult> ChangePwd([FromBody] ChangePasswordDto ufl)
     {
         var user = await _manager.FindByEmailAsync(ufl.Email);
         if (user == null)

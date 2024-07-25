@@ -1,57 +1,60 @@
-using api.helpers;
-using fotoservice.api.helpers;
-using fotoservice.extensions;
-using Microsoft.AspNetCore.Authorization;
-
 namespace api.Controllers;
 
 public class ImagesController : BaseApiController
 {
+    private readonly IImage _image;
 
-    private static readonly HttpClient client = new HttpClient();
-    
-    private readonly IConfiguration _config;
-    private IImage _image;
-    
-
-    public ImagesController(
-        IConfiguration config,
-        IImage image)
+    public ImagesController(IImage image)
     {
-        _config = config;
         _image = image;
     }
 
     //get a Paged list of images per Category
     [HttpGet("getImages")]
-    public async Task<ActionResult<PagedList<ImageDto>>> getImages([FromQuery]ImageParams imgP)
+    public async Task<ActionResult<PagedList<ImageDto>>> GetImages([FromQuery] ImageParams imgP)
     {
         var plImages = await _image.getImages(imgP);
-        Response.AddPaginationHeader(new PaginationHeader(plImages.CurrentPage, plImages.PageSize, plImages.TotalCount, plImages.TotalPages));
+        Response.AddPaginationHeader(
+            new PaginationHeader(
+                plImages.CurrentPage,
+                plImages.PageSize,
+                plImages.TotalCount,
+                plImages.TotalPages
+            )
+        );
         return Ok(plImages);
     }
 
-     [HttpGet("getImagesByCategory/{cat}")]
-    public async Task<ActionResult<List<ImageDto>>> getImagesByCat(int cat)
+    [HttpGet("getImagesByCategory/{cat}")]
+    public async Task<ActionResult<List<ImageDto>>> GetImagesByCat(int cat)
     {
         var plImages = await _image.getImagesByCategory(cat);
         return Ok(plImages);
     }
 
-     [HttpPost("addImage")]
-     public async Task<ActionResult<int>> addImage(ImageDto imagedto){
-
+    [HttpPost("addImage")]
+    public async Task<ActionResult<int>> AddImage(ImageDto imagedto)
+    {
         return await _image.addImage(imagedto);
-     }
+    }
 
-     [HttpGet("findImage/{Id}")]
-     public async Task<ActionResult<ImageDto>> findImage(string Id){
+    [HttpDelete("id")]
+    public async Task<ActionResult<int>> DeleteImage(int id)
+    {
+        return await _image.deleteImage(id);
+    }
+
+    [HttpPut("updateImage")]
+    public async Task<ActionResult<int>> UpdateImage(ImageDto imagedto)
+    {
+        return await _image.updateImage(imagedto);
+    }
+
+    [HttpGet("findImage/{Id}")]
+    public async Task<ActionResult<ImageDto>> FindImage(string Id)
+    {
         return await _image.findImage(Id);
-     }
+    }
 
-   /*  [Authorize]
-    [HttpGet("findImagesByUser/{email}")]
-     public async Task<ActionResult<List<ImageDto>>> findImagesByUser(string email){
-        return await _image.findImagesByUser(email);
-     } */
+   
 }
