@@ -7,7 +7,7 @@ namespace fotoservice.data.interfaces;
 public interface IImage
     {
         Task<PagedList<ImageDto>> getImages(ImageParams imgP );
-
+Task<string[]> getCategories( );
         Task<int> addImage(Image image);
         Task<int> deleteImage(string id);
         Task<int> updateImage(ImageDto image);

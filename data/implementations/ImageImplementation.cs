@@ -138,7 +138,23 @@ namespace api.data.implementations
         {
             return await _context.SaveChangesAsync() > 0;
         }
-        
 
+        public async Task<string[]> getCategories()
+        {
+             List<string> list = new List<string>();
+             await Task.Run(() =>
+            {
+                list.Add("Blitterswijk");
+                list.Add("Baarn");
+                list.Add("Beaufortlaan");
+                list.Add("Birkenheuvelweg");
+                list.Add("Test");
+            }
+
+            );
+            
+            string [] str = list.ToArray();
+            return str;
+        }
     }
 }

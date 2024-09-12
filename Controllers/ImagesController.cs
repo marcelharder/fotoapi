@@ -69,5 +69,10 @@ public class ImagesController : BaseApiController
         return await _image.findImage(Id);
     }
 
+    [HttpGet("getCategories")]
+    public async Task<ActionResult<string[]>> getCategories(){
+     return await _image.getCategories();
+    }
+
 
 }
