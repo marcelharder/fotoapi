@@ -1,7 +1,3 @@
-
-
-using fotoservice.api.data.interfaces;
-
 namespace api.Controllers;
 
 public class AccountController : BaseApiController
@@ -12,14 +8,12 @@ public class AccountController : BaseApiController
     private readonly UserManager<AppUser> _manager;
     private readonly SignInManager<AppUser> _signIn;
     private readonly IConfiguration _config;
-    private IUsers _users;
     private readonly IWebHostEnvironment _hostEnvironment;
 
     public AccountController(
         ITokenService ts,
         IConfiguration config,
         UserManager<AppUser> manager,
-        IUsers users,
         IWebHostEnvironment hostEnvironment,
         SignInManager<AppUser> signIn)
     {
@@ -27,7 +21,6 @@ public class AccountController : BaseApiController
         _manager = manager;
         _signIn = signIn;
         _ts = ts;
-        _users = users;
         _hostEnvironment = hostEnvironment;
 
 
@@ -35,7 +28,7 @@ public class AccountController : BaseApiController
     }
 
     [HttpGet("checkIfUserExists/{email}")]
-    public async Task<int> userexists(string email)
+    public async Task<int> Userexists(string email)
     {
         var result = 0;
         var user = await _manager.Users.FirstOrDefaultAsync(x => x.Email == email);
@@ -88,7 +81,7 @@ public class AccountController : BaseApiController
 
         return new UserDto
         {
-            UserName = user.UserName,
+            UserName = user.UserName!,
             Token = await _ts.CreateToken(user),
             UserId = user.Id,
             paidTill = user.PaidTill
@@ -96,7 +89,7 @@ public class AccountController : BaseApiController
     }
 
     [HttpPut("changePassword")]
-    public async Task<IActionResult> CChangePwd([FromBody] ChangePasswordDto ufl)
+    public async Task<IActionResult> ChangePwd([FromBody] ChangePasswordDto ufl)
     {
         var user = await _manager.FindByEmailAsync(ufl.Email);
         if (user == null)

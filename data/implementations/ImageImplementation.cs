@@ -1,3 +1,4 @@
+using System.Globalization;
 using api.helpers;
 using AutoMapper.QueryableExtensions;
 using fotoservice.api.data.interfaces;
@@ -8,38 +9,48 @@ namespace api.data.implementations
     public class ImageImplementation : IImage
     {
         private ApplicationDbContext _context;
+        private UserManager<AppUser> _userManager;
+        private IHttpContextAccessor _ht;
         private readonly IMapper _mapper;
         private readonly IUsers _user;
-        public ImageImplementation(ApplicationDbContext context, IMapper mapper, IUsers user)
+
+        public ImageImplementation(
+            ApplicationDbContext context,
+            IMapper mapper,
+            UserManager<AppUser> userManager,
+            IHttpContextAccessor ht,
+            IUsers user
+        )
         {
             _user = user;
             _mapper = mapper;
             _context = context;
+            _userManager = userManager;
+            _ht = ht;
         }
 
         public async Task<PagedList<ImageDto>> getImages(ImageParams imgP)
         {
             IQueryable<ImageDto> images;
 
-
             if (imgP.Category == 1)
             {
-                images = _context.Images
-                         .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
-                         .AsNoTracking();
+                images = _context
+                    .Images.ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking();
             }
             else
             {
-                images = _context.Images
-                       .Where(x => x.Category == imgP.Category)
-                       .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
-                       .AsNoTracking();
+                images = _context
+                    .Images.Where(x => x.Category == imgP.Category)
+                    .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking();
             }
 
             return await PagedList<ImageDto>.CreateAsync(images, imgP.PageNumber, imgP.PageSize);
         }
 
-        public async Task<int> addImage(ImageDto imagedto)
+        public async Task<int> addImage(Image imagedto)
         {
             var result = 1;
             var img = _mapper.Map<Image>(imagedto);
@@ -50,34 +61,100 @@ namespace api.data.implementations
 
         public async Task<ImageDto> findImage(string Id)
         {
-            var selectedImage = await _context.Images
-                 .FirstOrDefaultAsync(x => x.Id == Id);
+            var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == Id);
             return _mapper.Map<ImageDto>(selectedImage);
         }
 
         public async Task<ActionResult<List<ImageDto>>> findImagesByUser(string email)
         {
             // get the categories that his user can see
-            string[] cararray = {};
+            string[] cararray = { };
             IQueryable<ImageDto> images;
             var l = new List<ImageDto>();
 
             var selectedUser = await _user.GetUserByMail(email);
 
-          
-            if(selectedUser != null){
+            if (selectedUser != null)
+            {
                 var categories = selectedUser.AllowedToSee;
-                if(categories != null){cararray = categories.Split(",");}
+                if (categories != null)
+                {
+                    cararray = categories.Split(",");
                 }
-            foreach(string s in cararray){
-                 images = _context.Images
-                       .Where(x => x.Category == Convert.ToInt32(s))
-                       .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
-                       .AsNoTracking();
+            }
+            foreach (string s in cararray)
+            {
+                images = _context
+                    .Images.Where(x => x.Category == Convert.ToInt32(s))
+                    .ProjectTo<ImageDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking();
 
                 l.AddRange(await images.ToListAsync());
             }
             return l;
+        }
+
+        public async Task<ActionResult<List<ImageDto>>> getImagesByCategory(int category)
+        {
+            string[] cararray = { };
+            var l = new List<ImageDto>();
+            // get all the images from this category
+            var images = await _context.Images.Where(x => x.Category == category).ToArrayAsync();
+            // return image DTO
+            foreach (Image im in images)
+            {
+                l.Add(_mapper.Map<ImageDto>(im));
+            }
+            return l;
+        }
+
+        public async Task<int> deleteImage(string id)
+        {
+            var selectedImage = await _context.Images.FirstOrDefaultAsync(x =>
+                x.Id == id
+            );
+            if (selectedImage != null)
+            {
+                _context.Images.Remove(selectedImage);
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> updateImage(ImageDto imagedto)
+        {
+            await Task.Run(() =>
+            {
+                _context.Images.Update(_mapper.Map<Image>(imagedto));
+            });
+
+            return 1;
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<string[]> getCategories()
+        {
+             List<string> list = new List<string>();
+             await Task.Run(() =>
+            {
+                list.Add("Blitterswijk");
+                list.Add("Baarn");
+                list.Add("Beaufortlaan");
+                list.Add("Birkenheuvelweg");
+                list.Add("Test");
+            }
+
+            );
+            
+            string [] str = list.ToArray();
+            return str;
         }
     }
 }
