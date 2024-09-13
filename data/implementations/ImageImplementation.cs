@@ -143,7 +143,7 @@ namespace api.data.implementations
         {
             List<CategoryDto> list = new List<CategoryDto>();
             List<CategoryDto> test = new List<CategoryDto>();
-          
+
             await Task.Run(() =>
            {
                var cat = new CategoryDto();
@@ -207,28 +207,14 @@ namespace api.data.implementations
             var help2 = help.ToList();
             foreach (string r in help2)
             {
-               if(list.Exists(x => x.Id == Convert.ToInt32(r))){
-               test.Add(list.FirstOrDefault(x => x.Id == Convert.ToInt32(r)));
-           }
+                if (list.Exists(x => x.Id == Convert.ToInt32(r)))
+                {
+                    test.Add(list.FirstOrDefault(x => x.Id == Convert.ToInt32(r)));
+                }
             }
             return test;
         }
 
-        private static List<CategoryDto> FilterList(int test, List<CategoryDto> fullList)
-        {
-
-           if(fullList.Exists(x => x.Id == test)){
-
-           }
-
-
-
-
-            var filtered_list = new List<CategoryDto>();
-            filtered_list = fullList
-                           .Where(item => item.Id == Convert.ToInt32(test))
-                           .ToList();
-            return filtered_list;
-        }
+        
     }
 }
