@@ -139,22 +139,60 @@ namespace api.data.implementations
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<string[]> getCategories()
+        public async Task<List<CategoryDto>> getCategories()
         {
-             List<string> list = new List<string>();
+             List<CategoryDto> list = new List<CategoryDto>();
+             
              await Task.Run(() =>
             {
-                list.Add("Blitterswijk");
-                list.Add("Baarn");
-                list.Add("Beaufortlaan");
-                list.Add("Birkenheuvelweg");
-                list.Add("Test");
+                var cat = new CategoryDto();
+                cat.Id = 1;
+                cat.Description = "Baden-Baden";
+                cat.MainPhoto = "";
+                list.Add(cat);
+
+                var cat1 = new CategoryDto();
+                cat1.Id = 2;
+                cat1.Description = "Blitterswijk";
+                cat1.MainPhoto = "";
+                list.Add(cat1);
+                
+                var cat2 = new CategoryDto();
+                cat2.Id = 3;
+                cat2.Description = "Baarn";
+                cat2.MainPhoto = "";
+                list.Add(cat2);
+
+                var cat3 = new CategoryDto();
+                cat3.Id = 4;
+                cat3.Description = "Beaufortlaan";
+                cat3.MainPhoto = "2023";
+                list.Add(cat3);
+                
+                var cat4 = new CategoryDto();
+                cat4.Id = 5;
+                cat4.Description = "Birkenheuvelweg";
+                cat4.MainPhoto = "";
+                list.Add(cat4);
+
+                var cat5 = new CategoryDto();
+                cat5.Id = 6;
+                cat5.Description = "Jong Beatrix";
+                cat5.MainPhoto = "";
+                list.Add(cat5);
+
+                var cat6 = new CategoryDto();
+                cat6.Id = 7;
+                cat6.Description = "Engeland 1976";
+                cat6.MainPhoto = "";
+                list.Add(cat6);
+               
             }
 
             );
             
-            string [] str = list.ToArray();
-            return str;
+           
+            return list;
         }
     }
 }

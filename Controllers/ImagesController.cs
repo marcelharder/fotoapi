@@ -70,7 +70,7 @@ public class ImagesController : BaseApiController
     }
 
     [HttpGet("getCategories")]
-    public async Task<ActionResult<string[]>> getCategories(){
+    public async Task<ActionResult<List<CategoryDto>>> getCategories(){
      return await _image.getCategories();
     }
 
