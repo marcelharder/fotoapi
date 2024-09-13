@@ -1,5 +1,4 @@
 using fotoservice.api.data.interfaces;
-using Microsoft.AspNetCore.Identity;
 
 namespace fotoservice.data.implementations;
 public class UserRepo : IUsers
@@ -22,9 +21,12 @@ public class UserRepo : IUsers
         throw new NotImplementedException();
     }
 
-    public Task<AppUser> GetUser(int id)
+    public async Task<AppUser> GetUser(int id)
     {
-        throw new NotImplementedException();
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if(user != null){ return user;}
+        return null;
+        
     }
 
      public async Task<AppUser> GetUserByMail(string email)

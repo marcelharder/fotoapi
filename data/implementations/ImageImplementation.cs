@@ -141,58 +141,94 @@ namespace api.data.implementations
 
         public async Task<List<CategoryDto>> getCategories()
         {
-             List<CategoryDto> list = new List<CategoryDto>();
-             
-             await Task.Run(() =>
+            List<CategoryDto> list = new List<CategoryDto>();
+            List<CategoryDto> test = new List<CategoryDto>();
+          
+            await Task.Run(() =>
+           {
+               var cat = new CategoryDto();
+               cat.Id = 1;
+               cat.Description = "Baden-Baden";
+               cat.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               list.Add(cat);
+
+               var cat1 = new CategoryDto();
+               cat1.Id = 2;
+               cat1.Description = "Blitterswijk";
+               cat1.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               list.Add(cat1);
+
+               var cat2 = new CategoryDto();
+               cat2.Id = 3;
+               cat2.Description = "Baarn";
+               cat2.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               list.Add(cat2);
+
+               var cat3 = new CategoryDto();
+               cat3.Id = 4;
+               cat3.Description = "Beaufortlaan";
+               cat3.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               list.Add(cat3);
+
+               var cat4 = new CategoryDto();
+               cat4.Id = 5;
+               cat4.Description = "Birkenheuvelweg";
+               cat4.MainPhoto = "../../assets/dias/birkenheuvelweg/0.jpg";
+               list.Add(cat4);
+
+               var cat5 = new CategoryDto();
+               cat5.Id = 6;
+               cat5.Description = "Jong Beatrix";
+               cat5.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               list.Add(cat5);
+
+               var cat6 = new CategoryDto();
+               cat6.Id = 7;
+               cat6.Description = "Engeland 1976";
+               cat6.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               list.Add(cat6);
+
+           }
+
+           );
+
+            // show only the categories that this user is allowed to see
+            var allowed = "";
+            var loggedInUser = _ht.HttpContext?.User;
+            var userdetails = await _userManager.FindByNameAsync(loggedInUser.Identity.Name);
+
+
+            if (userdetails != null)
             {
-                var cat = new CategoryDto();
-                cat.Id = 1;
-                cat.Description = "Baden-Baden";
-                cat.MainPhoto = "";
-                list.Add(cat);
-
-                var cat1 = new CategoryDto();
-                cat1.Id = 2;
-                cat1.Description = "Blitterswijk";
-                cat1.MainPhoto = "";
-                list.Add(cat1);
-                
-                var cat2 = new CategoryDto();
-                cat2.Id = 3;
-                cat2.Description = "Baarn";
-                cat2.MainPhoto = "";
-                list.Add(cat2);
-
-                var cat3 = new CategoryDto();
-                cat3.Id = 4;
-                cat3.Description = "Beaufortlaan";
-                cat3.MainPhoto = "2023";
-                list.Add(cat3);
-                
-                var cat4 = new CategoryDto();
-                cat4.Id = 5;
-                cat4.Description = "Birkenheuvelweg";
-                cat4.MainPhoto = "";
-                list.Add(cat4);
-
-                var cat5 = new CategoryDto();
-                cat5.Id = 6;
-                cat5.Description = "Jong Beatrix";
-                cat5.MainPhoto = "";
-                list.Add(cat5);
-
-                var cat6 = new CategoryDto();
-                cat6.Id = 7;
-                cat6.Description = "Engeland 1976";
-                cat6.MainPhoto = "";
-                list.Add(cat6);
-               
+                if (userdetails.AllowedToSee != null) { allowed = userdetails.AllowedToSee; }
             }
+            // make array from this string
+            var help = allowed.Split(',');
+            var help2 = help.ToList();
+            foreach (string r in help2)
+            {
+               if(list.Exists(x => x.Id == Convert.ToInt32(r))){
+               test.Add(list.FirstOrDefault(x => x.Id == Convert.ToInt32(r)));
+           }
+            }
+            return test;
+        }
 
-            );
-            
-           
-            return list;
+        private static List<CategoryDto> FilterList(int test, List<CategoryDto> fullList)
+        {
+
+           if(fullList.Exists(x => x.Id == test)){
+
+           }
+
+
+
+
+            var filtered_list = new List<CategoryDto>();
+            filtered_list = fullList
+                           .Where(item => item.Id == Convert.ToInt32(test))
+                           .ToList();
+            return filtered_list;
         }
     }
 }
