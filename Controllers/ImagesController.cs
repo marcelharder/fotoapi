@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace api.Controllers;
 
 public class ImagesController : BaseApiController
@@ -26,6 +28,24 @@ public class ImagesController : BaseApiController
         );
         return Ok(plImages);
     }
+
+    [HttpGet("getImageFile/{id}")]
+
+    public IActionResult getImageFile(int id)
+    {
+
+        // get the file name from the id uit the database
+        var imagePath = "../api/MyStaticFiles/images/DSC_2502.JPG";
+        var image = System.IO.File.OpenRead(imagePath);
+
+        return File(image, "image/jpg");
+    }
+
+    
+
+
+
+
 
     [HttpGet("getImagesByCategory/{cat}")]
     public async Task<ActionResult<List<ImageDto>>> GetImagesByCat(int cat)
@@ -70,8 +90,9 @@ public class ImagesController : BaseApiController
     }
 
     [HttpGet("getCategories")]
-    public async Task<ActionResult<List<CategoryDto>>> getCategories(){
-     return await _image.getCategories();
+    public async Task<ActionResult<List<CategoryDto>>> getCategories()
+    {
+        return await _image.getCategories();
     }
 
 

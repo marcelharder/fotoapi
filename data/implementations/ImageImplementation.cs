@@ -9,12 +9,14 @@ namespace api.data.implementations
     public class ImageImplementation : IImage
     {
         private ApplicationDbContext _context;
+        private DapperContext _dap;
         private UserManager<AppUser> _userManager;
         private IHttpContextAccessor _ht;
         private readonly IMapper _mapper;
         private readonly IUsers _user;
 
         public ImageImplementation(
+            DapperContext dap,
             ApplicationDbContext context,
             IMapper mapper,
             UserManager<AppUser> userManager,
@@ -27,6 +29,7 @@ namespace api.data.implementations
             _context = context;
             _userManager = userManager;
             _ht = ht;
+            _dap = dap;
         }
 
         public async Task<PagedList<ImageDto>> getImages(ImageParams imgP)
@@ -144,6 +147,18 @@ namespace api.data.implementations
             List<CategoryDto> list = new List<CategoryDto>();
             List<CategoryDto> test = new List<CategoryDto>();
 
+            //get the details from the database
+           /*  var query = "SELECT * FROM Category";
+
+            using (var connection = _dap.CreateConnection())
+            {
+                var category = await connection.QueryAsync<Category>(query);
+                // change to categoryDto
+                
+                return category.ToList();
+            } */
+
+
             await Task.Run(() =>
            {
                var cat = new CategoryDto();
@@ -215,6 +230,6 @@ namespace api.data.implementations
             return test;
         }
 
-        
+
     }
 }
