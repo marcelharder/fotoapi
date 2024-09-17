@@ -15,7 +15,10 @@ namespace api.data.implementations
         private readonly IMapper _mapper;
         private readonly IUsers _user;
 
+        private readonly IConfiguration _conf;
+
         public ImageImplementation(
+            IConfiguration conf,
             DapperContext dap,
             ApplicationDbContext context,
             IMapper mapper,
@@ -30,6 +33,7 @@ namespace api.data.implementations
             _userManager = userManager;
             _ht = ht;
             _dap = dap;
+            _conf = conf;
         }
 
         public async Task<PagedList<ImageDto>> getImages(ImageParams imgP)
@@ -144,8 +148,11 @@ namespace api.data.implementations
 
         public async Task<List<CategoryDto>> getCategories()
         {
+          
             List<CategoryDto> list = new List<CategoryDto>();
             List<CategoryDto> test = new List<CategoryDto>();
+
+
 
             //get the details from the database
            /*  var query = "SELECT * FROM Category";
@@ -164,43 +171,43 @@ namespace api.data.implementations
                var cat = new CategoryDto();
                cat.Id = 1;
                cat.Description = "Baden-Baden";
-               cat.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               cat.MainPhoto = "http://localhost:5123/api/Images/getImageFile/6";
                list.Add(cat);
 
                var cat1 = new CategoryDto();
                cat1.Id = 2;
                cat1.Description = "Blitterswijk";
-               cat1.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               cat1.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
                list.Add(cat1);
 
                var cat2 = new CategoryDto();
                cat2.Id = 3;
                cat2.Description = "Baarn";
-               cat2.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               cat2.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
                list.Add(cat2);
 
                var cat3 = new CategoryDto();
                cat3.Id = 4;
                cat3.Description = "Beaufortlaan";
-               cat3.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               cat3.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
                list.Add(cat3);
 
                var cat4 = new CategoryDto();
                cat4.Id = 5;
                cat4.Description = "Birkenheuvelweg";
-               cat4.MainPhoto = "../../assets/dias/birkenheuvelweg/0.jpg";
+               cat4.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
                list.Add(cat4);
 
                var cat5 = new CategoryDto();
                cat5.Id = 6;
                cat5.Description = "Jong Beatrix";
-               cat5.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               cat5.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
                list.Add(cat5);
 
                var cat6 = new CategoryDto();
                cat6.Id = 7;
                cat6.Description = "Engeland 1976";
-               cat6.MainPhoto = "../../assets/dias/baden-baden/10.jpg";
+               cat6.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
                list.Add(cat6);
 
            }

@@ -7,10 +7,16 @@ public class ImagesController : BaseApiController
     private readonly IImage _image;
     private readonly IMapper _mapper;
 
-    public ImagesController(IImage image, IMapper mapper)
+    private readonly IConfiguration _conf;
+
+    
+
+    public ImagesController(IImage image, IMapper mapper, IConfiguration conf)
     {
         _image = image;
         _mapper = mapper;
+        _conf = conf;
+        
     }
 
     //get a Paged list of images per Category
@@ -31,13 +37,14 @@ public class ImagesController : BaseApiController
 
     [HttpGet("getImageFile/{id}")]
 
-    public IActionResult getImageFile(int id)
+    public async Task<IActionResult> getImageFile(int id)
     {
-
+       var locationPrefix = _conf.GetValue<string>("LocationPreFix");
+        
         // get the file name from the id uit the database
-        var imagePath = "../api/MyStaticFiles/images/DSC_2502.JPG";
-        var image = System.IO.File.OpenRead(imagePath);
-
+        var selectedImage = await _image.findImage(id.ToString());
+        var image = System.IO.File.OpenRead(locationPrefix + selectedImage.ImageUrl);
+       
         return File(image, "image/jpg");
     }
 
