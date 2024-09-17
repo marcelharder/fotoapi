@@ -13,7 +13,6 @@ public interface IImage
         Task<int> updateImage(ImageDto image);
         Task<ImageDto> findImage(string Id);
         Task<ActionResult<List<ImageDto>>> findImagesByUser(string email);
-
         Task<ActionResult<List<ImageDto>>> getImagesByCategory( int category);
     Task<bool> SaveChangesAsync();
 }
