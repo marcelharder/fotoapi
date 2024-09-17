@@ -148,7 +148,7 @@ namespace api.data.implementations
             List<CategoryDto> test = new List<CategoryDto>();
 
             //get the details from the database
-            var query = "SELECT * FROM Category";
+           /*  var query = "SELECT * FROM Category";
 
             using (var connection = _dap.CreateConnection())
             {
@@ -156,7 +156,7 @@ namespace api.data.implementations
                 // change to categoryDto
                 
                 return category.ToList();
-            }
+            } */
 
 
             await Task.Run(() =>
