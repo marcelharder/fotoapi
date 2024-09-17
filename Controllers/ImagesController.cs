@@ -40,6 +40,7 @@ public class ImagesController : BaseApiController
     public async Task<IActionResult> getImageFile(int id)
     {
        var locationPrefix = _conf.GetValue<string>("LocationPreFix");
+     // in appsettings => "LocationPreFix": "/media/marcel/MSI Harddrive/webimages/",
         
         // get the file name from the id uit the database
         var selectedImage = await _image.findImage(id.ToString());
