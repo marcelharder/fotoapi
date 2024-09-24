@@ -40,7 +40,7 @@ namespace fotoservice.extensions;
             services.AddScoped<IUsers,UserRepo>();
             services.AddScoped<IImage,ImageImplementation>();
             services.AddScoped<ITokenService,TokenService>();
-            services.AddScoped<IConfig,ConfigImpl>();
+            services.AddScoped<IDapperCategoryService, Dappercategory>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             return services;
         }

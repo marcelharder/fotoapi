@@ -62,6 +62,26 @@ public class Seed
 
 
     }
+     public static async Task SeedCategories(ApplicationDbContext context)
+    {
+        if (await context.Categories.AnyAsync()) return;
+        var catData = await System.IO.File.ReadAllTextAsync("data/seed/CategoryData.json");
+        var categories = JsonSerializer.Deserialize<List<Category>>(catData);
+        
+        
+        if (categories != null)
+        {
+            foreach (Category im in categories)
+            {
+                // save image to database
+                var result = context.Categories.Add(im);
+            }
+            await context.SaveChangesAsync();
+        }
+
+
+
+    }
 
 
 

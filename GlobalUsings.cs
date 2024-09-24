@@ -31,5 +31,8 @@ global using fotoservice.api.helpers;
 global using fotoservice.extensions;
 global using Microsoft.AspNetCore.Authorization;
 
+global using Dapper;
+
+
 
 

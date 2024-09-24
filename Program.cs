@@ -29,7 +29,7 @@ var app = builder.Build();
             await context.Database.EnsureCreatedAsync();
             await Seed.SeedUsers(userManager, roleManager);
             await Seed.SeedImages(context);
-            //await Seed.SeedCountries(context);
+            await Seed.SeedCategories(context);
             
         }
         catch (Exception ex)

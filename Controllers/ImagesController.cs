@@ -50,11 +50,6 @@ public class ImagesController : BaseApiController
         return File(image, "image/jpg");
     }
 
-    
-
-
-
-
 
     [HttpGet("getImagesByCategory/{cat}")]
     public async Task<ActionResult<List<ImageDto>>> GetImagesByCat(int cat)
