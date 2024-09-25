@@ -1,4 +1,7 @@
 using System.Net;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using IronSoftware.Drawing;
 
 namespace api.Controllers;
 
@@ -40,15 +43,33 @@ public class ImagesController : BaseApiController
     public async Task<IActionResult> getImageFile(int id)
     {
        var locationPrefix = _conf.GetValue<string>("NfsLocation");
+       AnyBitmap anyBitmap;
+     
      // in appsettings => "LocationPreFix": "/media/marcel/MSI Harddrive/webimages/",
      // in appsettings => "NfsLocation": "/nfs/mariadb_data/fotos/",
         
         // get the file name from the id uit the database
         var selectedImage = await _image.findImage(id.ToString());
-        var image = System.IO.File.OpenRead(locationPrefix + selectedImage.ImageUrl);
+        var img = System.IO.File.OpenRead(locationPrefix + selectedImage.ImageUrl);
+        
+        using(SixLabors.ImageSharp.Image image = SixLabors.ImageSharp.Image.Load(img)){
+            int width = image.Width / 4;
+            int height = image.Height / 4;
+            image.Mutate(x => x.Resize(width, height));
+            
+            anyBitmap = image;
+            var help = anyBitmap.ExportBytesAsJpg();
+            //MemoryStream stream = anyBitmap.ToStream();
+            
+            return File(help,"image/jpg");
+            
+        }
+        
        
-        return File(image, "image/jpg");
+        
     }
+
+    
 
 
     [HttpGet("getImagesByCategory/{cat}")]
@@ -59,14 +80,15 @@ public class ImagesController : BaseApiController
     }
 
     [HttpPost("addImage")]
-    public async Task<ActionResult<int>> AddImage(ImageDto imagedto)
+    public async Task<ActionResult<int>> AddImage(ImageDto imageDto)
     {
-        var img = _mapper.Map<Image>(imagedto);
-        await _image.addImage(img);
+        
+      /*   await _image.addImage(imageDto);
         if (!await _image.SaveChangesAsync())
         {
+
             return CreatedAtRoute("GetImage", new { id = img.Id }, img);
-        }
+        } */
         return BadRequest("Could not add Image ...");
     }
 
@@ -93,11 +115,7 @@ public class ImagesController : BaseApiController
         return await _image.findImage(Id);
     }
 
-    [HttpGet("getCategories")]
-    public async Task<ActionResult<List<CategoryDto>>> getCategories()
-    {
-        return await _image.getCategories();
-    }
+  
 
 
 }

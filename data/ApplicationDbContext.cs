@@ -13,7 +13,7 @@ namespace fotoservice.data;
     
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<models.Image> Images { get; set; }
         public DbSet<Category> Categories { get; set; }
        
 
