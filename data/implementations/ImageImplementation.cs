@@ -158,6 +158,7 @@ namespace api.data.implementations
 
                 if (numberOfImages == 1)
                 {
+                    response.numberOfImages = 1;
                     response.ShowL = false;
                     response.ShowR = false;
                     response.nextImageIdL = "";
