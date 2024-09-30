@@ -57,8 +57,6 @@ namespace api.data.implementations
             return await PagedList<ImageDto>.CreateAsync(images, imgP.PageNumber, imgP.PageSize);
         }
 
-       
-
         public async Task<ImageDto> findImage(string Id)
         {
             var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == Id);
@@ -141,11 +139,68 @@ namespace api.data.implementations
 
         public async Task<int> addImage(ImageDto imDto)
         {
-             var result = 1;
+            var result = 1;
             var img = _mapper.Map<fotoservice.data.models.Image>(imDto);
-            _context.Images.Add(img);
+            var help = _context.Images.Add(img);
             await _context.SaveChangesAsync();
             return result;
+        }
+
+        public async Task<ActionResult<CarouselDto>> getCarouselData(string id)
+        {
+            var response = new CarouselDto();
+            var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == id);
+            if (selectedImage != null)
+            {
+                var images = await _context.Images.Where(x => x.Category == selectedImage.Category).ToArrayAsync();
+                var test = images.ToList();
+                var numberOfImages = test.Count();
+
+                if (numberOfImages == 1)
+                {
+                    response.ShowL = false;
+                    response.ShowR = false;
+                    response.nextImageIdL = "";
+                    response.nextImageIdR = "";
+                }
+                else
+                {
+                    var lastImage = test.LastOrDefault();
+                    var firstImage = test.FirstOrDefault();
+                    int imagelocation = test.FindIndex(x => x == selectedImage);
+
+                    if (imagelocation == 0) // dit is het eerste item
+                    {
+                        response.numberOfImages = test.Count();
+                        response.ShowL = false;
+                        response.ShowR = true;
+                        response.nextImageIdR = test[imagelocation + 1].Id;
+                    }
+                    else
+                    {
+
+                        if (imagelocation == (numberOfImages - 1)) // dit is het laatste item
+                        {
+                            response.numberOfImages = test.Count();
+                            response.ShowR = false;
+                            response.ShowL = true;
+                            response.nextImageIdR = test[imagelocation - 1].Id;
+                        }
+                        else
+                        {
+                            response.numberOfImages = test.Count();
+                            response.ShowL = true;
+                            response.ShowR = true;
+                            response.nextImageIdL = test[imagelocation - 1].Id;
+                            response.nextImageIdR = test[imagelocation + 1].Id;
+                        }
+                    }
+
+                    return response;
+
+                }
+            }
+            return null;
         }
     }
 }

@@ -67,15 +67,14 @@ public class ImagesController : BaseApiController
     public async Task<IActionResult> getFullImageFile(int id)
     {
         var locationPrefix = _conf.GetValue<string>("NfsLocation");
-
         // in appsettings => "LocationPreFix": "/media/marcel/MSI Harddrive/webimages/",
         // in appsettings => "NfsLocation": "/nfs/mariadb_data/fotos/",
         var selectedImage = await _image.findImage(id.ToString());
         var img = System.IO.File.OpenRead(locationPrefix + selectedImage.ImageUrl);
 
         return File(img, "image/jpg");
-
     }
+
 
 
 
@@ -90,12 +89,12 @@ public class ImagesController : BaseApiController
     public async Task<ActionResult<int>> AddImage(ImageDto imageDto)
     {
 
-        /*   await _image.addImage(imageDto);
+         /*  var help = await _image.addImage(imageDto);
           if (!await _image.SaveChangesAsync())
           {
-
-              return CreatedAtRoute("GetImage", new { id = img.Id }, img);
-          } */
+              
+              return CreatedAtRoute("GetImage", new { id = help.Id }, img);
+          }   */
         return BadRequest("Could not add Image ...");
     }
 
@@ -122,7 +121,11 @@ public class ImagesController : BaseApiController
         return await _image.findImage(Id);
     }
 
-
+   [HttpGet("getCarousel/{Id}")]
+    public async Task<ActionResult<CarouselDto>> getCarousel(string Id)
+    {
+        return await _image.getCarouselData(Id);
+    }
 
 
 }
