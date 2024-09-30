@@ -46,12 +46,12 @@ public class Seed
     {
         if (await context.Images.AnyAsync()) return;
         var diaData = await System.IO.File.ReadAllTextAsync("data/seed/ImageData.json");
-        var images = JsonSerializer.Deserialize<List<Image>>(diaData);
+        var images = JsonSerializer.Deserialize<List<models.Image>>(diaData);
         
         
         if (images != null)
         {
-            foreach (Image im in images)
+            foreach (models.Image im in images)
             {
                 // save image to database
                 var result = context.Images.Add(im);

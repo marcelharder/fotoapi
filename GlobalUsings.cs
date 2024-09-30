@@ -32,6 +32,8 @@ global using fotoservice.extensions;
 global using Microsoft.AspNetCore.Authorization;
 
 global using Dapper;
+global using SixLabors.ImageSharp;
+global using SixLabors.ImageSharp.Processing;
 
 
 

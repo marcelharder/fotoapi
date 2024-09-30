@@ -57,15 +57,6 @@ namespace api.data.implementations
             return await PagedList<ImageDto>.CreateAsync(images, imgP.PageNumber, imgP.PageSize);
         }
 
-        public async Task<int> addImage(Image imagedto)
-        {
-            var result = 1;
-            var img = _mapper.Map<Image>(imagedto);
-            _context.Images.Add(img);
-            await _context.SaveChangesAsync();
-            return result;
-        }
-
         public async Task<ImageDto> findImage(string Id)
         {
             var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == Id);
@@ -108,7 +99,7 @@ namespace api.data.implementations
             // get all the images from this category
             var images = await _context.Images.Where(x => x.Category == category).ToArrayAsync();
             // return image DTO
-            foreach (Image im in images)
+            foreach (fotoservice.data.models.Image im in images)
             {
                 l.Add(_mapper.Map<ImageDto>(im));
             }
@@ -135,7 +126,7 @@ namespace api.data.implementations
         {
             await Task.Run(() =>
             {
-                _context.Images.Update(_mapper.Map<Image>(imagedto));
+                _context.Images.Update(_mapper.Map<fotoservice.data.models.Image>(imagedto));
             });
 
             return 1;
@@ -146,97 +137,71 @@ namespace api.data.implementations
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<CategoryDto>> getCategories()
+        public async Task<int> addImage(ImageDto imDto)
         {
-          
-            List<CategoryDto> list = new List<CategoryDto>();
-            List<CategoryDto> test = new List<CategoryDto>();
-
-
-
-            //get the details from the database
-           /*  var query = "SELECT * FROM Category";
-
-            using (var connection = _dap.CreateConnection())
-            {
-                var category = await connection.QueryAsync<Category>(query);
-                // change to categoryDto
-                
-                return category.ToList();
-            } */
-
-
-            await Task.Run(() =>
-           {
-               var cat = new CategoryDto();
-               cat.Id = 1;
-               cat.Description = "Baden-Baden";
-               cat.MainPhoto = "http://localhost:5123/api/Images/getImageFile/6";
-               list.Add(cat);
-
-               var cat1 = new CategoryDto();
-               cat1.Id = 2;
-               cat1.Description = "Blitterswijk";
-               cat1.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
-               list.Add(cat1);
-
-               var cat2 = new CategoryDto();
-               cat2.Id = 3;
-               cat2.Description = "Baarn";
-               cat2.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
-               list.Add(cat2);
-
-               var cat3 = new CategoryDto();
-               cat3.Id = 4;
-               cat3.Description = "Beaufortlaan";
-               cat3.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
-               list.Add(cat3);
-
-               var cat4 = new CategoryDto();
-               cat4.Id = 5;
-               cat4.Description = "Birkenheuvelweg";
-               cat4.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
-               list.Add(cat4);
-
-               var cat5 = new CategoryDto();
-               cat5.Id = 6;
-               cat5.Description = "Jong Beatrix";
-               cat5.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
-               list.Add(cat5);
-
-               var cat6 = new CategoryDto();
-               cat6.Id = 7;
-               cat6.Description = "Engeland 1976";
-               cat6.MainPhoto = "http://localhost:5123/api/Images/getImageFile/5";
-               list.Add(cat6);
-
-           }
-
-           );
-
-            // show only the categories that this user is allowed to see
-            var allowed = "";
-            var loggedInUser = _ht.HttpContext?.User;
-            var userdetails = await _userManager.FindByNameAsync(loggedInUser.Identity.Name);
-
-
-            if (userdetails != null)
-            {
-                if (userdetails.AllowedToSee != null) { allowed = userdetails.AllowedToSee; }
-            }
-            // make array from this string
-            var help = allowed.Split(',');
-            var help2 = help.ToList();
-            foreach (string r in help2)
-            {
-                if (list.Exists(x => x.Id == Convert.ToInt32(r)))
-                {
-                    test.Add(list.FirstOrDefault(x => x.Id == Convert.ToInt32(r)));
-                }
-            }
-            return test;
+            var result = 1;
+            var img = _mapper.Map<fotoservice.data.models.Image>(imDto);
+            var help = _context.Images.Add(img);
+            await _context.SaveChangesAsync();
+            return result;
         }
 
+        public async Task<ActionResult<CarouselDto>> getCarouselData(string id)
+        {
+            var response = new CarouselDto();
+            var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == id);
+            if (selectedImage != null)
+            {
+                var images = await _context.Images.Where(x => x.Category == selectedImage.Category).ToArrayAsync();
+                var test = images.ToList();
+                var numberOfImages = test.Count();
 
+                if (numberOfImages == 1)
+                {
+                    response.numberOfImages = 1;
+                    response.ShowL = false;
+                    response.ShowR = false;
+                    response.nextImageIdL = "";
+                    response.nextImageIdR = "";
+                }
+                else
+                {
+                    var lastImage = test.LastOrDefault();
+                    var firstImage = test.FirstOrDefault();
+                    int imagelocation = test.FindIndex(x => x == selectedImage);
+
+                    if (imagelocation == 0) // dit is het eerste item
+                    {
+                        response.numberOfImages = test.Count();
+                        response.ShowL = false;
+                        response.ShowR = true;
+                        response.nextImageIdR = test[imagelocation + 1].Id;
+                    }
+                    else
+                    {
+
+                        if (imagelocation == (numberOfImages - 1)) // dit is het laatste item
+                        {
+                            response.numberOfImages = test.Count();
+                            response.ShowR = false;
+                            response.ShowL = true;
+                            response.nextImageIdL = test[imagelocation - 1].Id;
+                        }
+                        else
+                        {
+                            response.numberOfImages = test.Count();
+                            response.ShowL = true;
+                            response.ShowR = true;
+                            response.nextImageIdL = test[imagelocation - 1].Id;
+                            response.nextImageIdR = test[imagelocation + 1].Id;
+                        }
+                    }
+
+                    return response;
+
+                }
+            }
+            return null;
+        }
     }
 }

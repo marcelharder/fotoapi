@@ -7,7 +7,7 @@ namespace fotoservice.api.helpers;
 
         public AutoMapperProfiles()
         {
-            CreateMap<Image, ImageDto>().ReverseMap();
+            CreateMap<fotoservice.data.models.Image, ImageDto>().ReverseMap();
         }
 
 

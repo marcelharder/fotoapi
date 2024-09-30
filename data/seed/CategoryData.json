@@ -2,13 +2,13 @@
     {"Id":1, "Name":"amersfoort","Description":"Amersfoort","MainPhoto":"1"},
     {"Id":2, "Name":"Amsterdam","Description":"Amsterdam","MainPhoto":"2"},
     {"Id":3, "Name":"Assen","Description":"Assen","MainPhoto":"3"},
-    {"Id":4, "Name":"baden-baden","Description":"Baden-Baden","MainPhoto":"4"},
+    {"Id":4, "Name":"baden-baden","Description":"Baden Baden","MainPhoto":"4"},
     {"Id":5, "Name":"beaufortlaan","Description":"Beaufortlaan","MainPhoto":"5"},
     {"Id":6, "Name":"birkenheuvelweg","Description":"Birkenheuvelweg","MainPhoto":"6"},
-    {"Id":7, "Name":"blitterswijk","Description":"blitterswijk","MainPhoto":"7"},
-    {"Id":8, "Name":"cornelisTromp","Description":"cornelis tromp","MainPhoto":"8"},
-    {"Id":9, "Name":"diversen","Description":"diversen","MainPhoto":"9"},
-    {"Id":10, "Name":"engeland 1969","Description":"engeland-1969","MainPhoto":"10"}
+    {"Id":7, "Name":"blitterswijk","Description":"Blitterswijk","MainPhoto":"7"},
+    {"Id":8, "Name":"cornelisTromp","Description":"Cornelis Tromp","MainPhoto":"8"},
+    {"Id":9, "Name":"diversen","Description":"Diversen","MainPhoto":"9"},
+    {"Id":10, "Name":"engeland 1969","Description":"Engeland 1969","MainPhoto":"10"}
     
 
 ]
