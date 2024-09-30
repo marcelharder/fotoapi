@@ -184,7 +184,7 @@ namespace api.data.implementations
                             response.numberOfImages = test.Count();
                             response.ShowR = false;
                             response.ShowL = true;
-                            response.nextImageIdR = test[imagelocation - 1].Id;
+                            response.nextImageIdL = test[imagelocation - 1].Id;
                         }
                         else
                         {
