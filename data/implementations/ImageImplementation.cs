@@ -171,8 +171,7 @@ namespace api.data.implementations
                     int imagelocation = test.FindIndex(x => x == selectedImage);
 
                     if (imagelocation == 0) // dit is het eerste item
-                    {
-                        response.numberOfImages = test.Count();
+                    {   response.numberOfImages = test.Count();
                         response.ShowL = false;
                         response.ShowR = true;
                         response.nextImageIdR = test[imagelocation + 1].Id;
@@ -189,7 +188,7 @@ namespace api.data.implementations
                         }
                         else
                         {
-                            response.numberOfImages = test.Count();
+                           response.numberOfImages = test.Count();
                             response.ShowL = true;
                             response.ShowR = true;
                             response.nextImageIdL = test[imagelocation - 1].Id;
@@ -197,6 +196,7 @@ namespace api.data.implementations
                         }
                     }
 
+                    response.category = selectedImage.Category; 
                     return response;
 
                 }
