@@ -28,7 +28,7 @@ var app = builder.Build();
             var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
             await context.Database.EnsureCreatedAsync();
             await Seed.SeedUsers(userManager, roleManager);
-            await Seed.SeedImages(context);
+            //await Seed.SeedImages(context);
             await Seed.SeedCategories(context);
             
         }

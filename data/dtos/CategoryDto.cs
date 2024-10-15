@@ -7,6 +7,7 @@ namespace fotoservice.data.dtos;
         public string? Description { get; set;}
         public string? Name { get; set;}
         public string? MainPhoto { get; set;}
+        public int? Number_of_images {get; set;}
 
        
     }
