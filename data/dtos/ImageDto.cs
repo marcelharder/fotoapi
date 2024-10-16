@@ -12,4 +12,9 @@ public class ImageDto
     public string? Spare1 { get; set; }
     public string? Spare2 { get; set; }
     public string? Spare3 { get; set; }
+
+    public ImageDto()
+    {
+        
+    }
 }

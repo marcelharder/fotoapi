@@ -24,12 +24,14 @@ var app = builder.Build();
         try
         {
             var context = services.GetRequiredService<ApplicationDbContext>();
+            var dapper = services.GetRequiredService<DapperContext>();
+            var image = services.GetRequiredService<IImage>();
             var userManager = services.GetRequiredService<UserManager<AppUser>>();
             var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
             await context.Database.EnsureCreatedAsync();
             await Seed.SeedUsers(userManager, roleManager);
-            //await Seed.SeedImages(context);
             await Seed.SeedCategories(context);
+            //await Seed.SeedImages(context,image);
             
         }
         catch (Exception ex)

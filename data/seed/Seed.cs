@@ -2,11 +2,6 @@ namespace fotoservice.data;
 
 public class Seed
 {
-    private readonly IDapperCategoryService _dapper;
-    public Seed(IDapperCategoryService dapper)
-    {
-        _dapper = dapper;
-    }
     public static async Task SeedUsers(
         UserManager<AppUser> manager,
         RoleManager<AppRole> roleManager
@@ -89,23 +84,92 @@ public class Seed
         }
     }
 
-    public async Task SeedImages(ApplicationDbContext context)
+    public static async Task SeedImages(ApplicationDbContext context, IImage image)
     {
         var counter = 0;
-        //var categories = new List<CategoryDto>();
+        var catList = new List<Category>();
+        ImageDto test;
+
         if (await context.Images.AnyAsync())
             return;
-        // get all the categories
-        var cats = await _dapper.GetAllCategories();
-        if(cats != null){
-            foreach(CategoryDto cat in cats){
-             
 
+        catList = await image.getCategories();
+
+        if (catList != null)
+        {
+            for (int x = 1; x < catList.Count; x++)
+            {
+                if (catList[x].Number_of_images != 0)
+                {
+                    counter += (int)catList[x].Number_of_images;
+                }
+                string? url = catList[x].Name + "/" + x.ToString() + ".jpg";
+
+                test = new ImageDto
+                {
+                    Id = counter.ToString(),
+                    ImageUrl = url,
+                    YearTaken = 1995,
+                    Location = "",
+                    Familie = "",
+                    Category = catList[x].Id,
+                    Series = "",
+                    Spare1 = "",
+                    Spare2 = "",
+                    Spare3 = "",
+                };
+                await image.addImage(test);
+
+                //addImage(catList[x],counter,url,_dapper);
             }
         }
-        
-        
-
-
     }
-}
+
+   /*  private static async void addImage(
+        CategoryDto up,
+        int Counter,
+        string ImageUrl,
+        DapperContext _context
+    )
+    {
+        var query =
+            "INSERT INTO Images (Id,ImageUrl,YearTaken,Location,Familie,Category,Series,Spare1,Spare2,Spare3)"
+            + "VALUES(@Id,@ImageUrl,@YearTaken,@Location,@Familie,@Category,@Series,@Spare1,@Spare2,@Spare3)";
+
+        var parameters = new DynamicParameters();
+
+        parameters.Add("Id", Counter, DbType.Int32);
+        parameters.Add("ImageUrl", ImageUrl, DbType.String);
+        parameters.Add("YearTaken", 1955, DbType.Int32);
+        parameters.Add("Location", up.Description, DbType.String);
+        parameters.Add("Familie", "n/a", DbType.String);
+        parameters.Add("Category", up.Id, DbType.Int32);
+        parameters.Add("Series", "n/a", DbType.String);
+        parameters.Add("Spare1", "n/a", DbType.String);
+        parameters.Add("Spare2", "n/a", DbType.String);
+        parameters.Add("Spare3", "n/a", DbType.String);
+
+        using (var connection = _context.CreateConnection())
+        {
+            //var id =  connection.QuerySingleAsync<int>(query,parameters);
+            var image = new models.Image()
+            {
+                Id = "Id",
+                ImageUrl = ImageUrl,
+                YearTaken = 1955,
+                Location = up.Description,
+                Familie = "n/a",
+                Category = (int)up.Id,
+                Quality = "n/a",
+                Series = "n/a",
+                Spare1 = "",
+                Spare2 = "",
+                Spare3 = ""
+            };
+            var rowsAffected = await connection.ExecuteAsync(query, image);
+            Console.WriteLine($"{rowsAffected} rows inserted");
+        }
+    }
+ */
+ 
+ }

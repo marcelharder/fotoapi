@@ -9,16 +9,18 @@ public class ImagesController : BaseApiController
 {
     private readonly IImage _image;
     private readonly IMapper _mapper;
+    private readonly IDapperCategoryService _dapper;
 
     private readonly IConfiguration _conf;
 
 
 
-    public ImagesController(IImage image, IMapper mapper, IConfiguration conf)
+    public ImagesController(IImage image, IMapper mapper, IConfiguration conf, IDapperCategoryService dapper)
     {
         _image = image;
         _mapper = mapper;
         _conf = conf;
+        _dapper = dapper;
 
     }
 
@@ -86,16 +88,14 @@ public class ImagesController : BaseApiController
     }
 
     [HttpPost("addImage")]
-    public async Task<ActionResult<int>> AddImage(ImageDto imageDto)
+    public async Task<ActionResult<int>> AddImage()
     {
-
-         /*  var help = await _image.addImage(imageDto);
-          if (!await _image.SaveChangesAsync())
-          {
-              
-              return CreatedAtRoute("GetImage", new { id = help.Id }, img);
-          }   */
-        return BadRequest("Could not add Image ...");
+      
+      await _dapper.SeedImages();
+       
+      
+       return Ok();
+          
     }
 
     [HttpDelete("deleteImage/{id}")]
@@ -117,6 +117,12 @@ public class ImagesController : BaseApiController
 
     [HttpGet("findImage/{Id}", Name = "GetImage")]
     public async Task<ActionResult<ImageDto>> FindImage(string Id)
+    {
+        return await _image.findImage(Id);
+    }
+    
+     [HttpGet("addImage")]
+    public async Task<ActionResult<ImageDto>> FindtwoImage(string Id)
     {
         return await _image.findImage(Id);
     }

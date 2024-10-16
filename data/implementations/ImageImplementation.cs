@@ -3,6 +3,7 @@ using api.helpers;
 using AutoMapper.QueryableExtensions;
 using fotoservice.api.data.interfaces;
 using fotoservice.api.helpers;
+using Microsoft.OpenApi.Any;
 
 namespace api.data.implementations
 {
@@ -108,9 +109,7 @@ namespace api.data.implementations
 
         public async Task<int> deleteImage(string id)
         {
-            var selectedImage = await _context.Images.FirstOrDefaultAsync(x =>
-                x.Id == id
-            );
+            var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == id);
             if (selectedImage != null)
             {
                 _context.Images.Remove(selectedImage);
@@ -152,7 +151,9 @@ namespace api.data.implementations
             var selectedImage = await _context.Images.FirstOrDefaultAsync(x => x.Id == id);
             if (selectedImage != null)
             {
-                var images = await _context.Images.Where(x => x.Category == selectedImage.Category).ToArrayAsync();
+                var images = await _context
+                    .Images.Where(x => x.Category == selectedImage.Category)
+                    .ToArrayAsync();
                 var test = images.ToList();
                 var numberOfImages = test.Count();
 
@@ -171,14 +172,14 @@ namespace api.data.implementations
                     int imagelocation = test.FindIndex(x => x == selectedImage);
 
                     if (imagelocation == 0) // dit is het eerste item
-                    {   response.numberOfImages = test.Count();
+                    {
+                        response.numberOfImages = test.Count();
                         response.ShowL = false;
                         response.ShowR = true;
                         response.nextImageIdR = test[imagelocation + 1].Id;
                     }
                     else
                     {
-
                         if (imagelocation == (numberOfImages - 1)) // dit is het laatste item
                         {
                             response.numberOfImages = test.Count();
@@ -188,7 +189,7 @@ namespace api.data.implementations
                         }
                         else
                         {
-                           response.numberOfImages = test.Count();
+                            response.numberOfImages = test.Count();
                             response.ShowL = true;
                             response.ShowR = true;
                             response.nextImageIdL = test[imagelocation - 1].Id;
@@ -196,12 +197,56 @@ namespace api.data.implementations
                         }
                     }
 
-                    response.category = selectedImage.Category; 
+                    response.category = selectedImage.Category;
                     return response;
-
                 }
             }
             return null;
+        }
+
+        public async Task<List<Category>> getCategories()
+        {
+            return _context.Categories.AsList();
+        }
+
+        public async Task SeedImages()
+        {
+            var counter = 0;
+            var catList = _context.Categories.AsList();
+            ImageDto test;
+            if (catList != null)
+            {
+                for (int x = 0; x < catList.Count; x++)
+                {
+                    if (catList[x].Number_of_images != 0)
+                    {
+                        counter += (int)catList[x].Number_of_images;
+
+                        for (int y = 0; y < counter; y++)
+                        {
+                            string? url = catList[x].Name + "/" + x.ToString() + ".jpg";
+                            test = new ImageDto
+                            {
+                                Id = counter.ToString(),
+                                ImageUrl = url,
+                                YearTaken = 1995,
+                                Location = "",
+                                Familie = "",
+                                Category = catList[x].Id,
+                                Series = "",
+                                Spare1 = "",
+                                Spare2 = "",
+                                Spare3 = "",
+                            };
+                            await addImage(test);
+                        }
+                    }
+
+                    //addImage(catList[x],counter,url,_dapper);
+                }
+            }
+
+            return;
         }
     }
 }
