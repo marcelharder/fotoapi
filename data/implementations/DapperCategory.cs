@@ -1,3 +1,5 @@
+using fotoservice.data.dtos;
+
 namespace api.data.implementations;
 
 public class Dappercategory : IDapperCategoryService
@@ -12,35 +14,39 @@ public class Dappercategory : IDapperCategoryService
     public async Task<int> SeedImages()
     {
         var catList = await GetAllCategories();
+        var imageList = new List<ImageDto>();
         var counter = 0;
-        ImageDto test;
-        if (catList != null)
+        var offset = 1;
+        var imagecounter = 0;
+      
+        for (int x = 0; x < catList.Count; x++)
         {
-            for (int x = 0; x < catList.Count; x++)
+            counter += (int)catList[x].Number_of_images;
+            for (int y = offset; y < counter; y++) // get the list of images that belongs to this category
             {
-                counter += (int)catList[x].Number_of_images;
-
-                for (int y = 0; y < counter; y++)
-                {
-                    string? url = catList[x].Name + "/" + (x + 1).ToString() + ".jpg";
-                    test = new ImageDto
+                imagecounter++;
+                imageList.Add(
+                    new ImageDto
                     {
-                        Id = (y + 1).ToString(),
-                        ImageUrl = url,
-                        YearTaken = 1995,
-                        Location = "mijn test",
+                        Id = y.ToString(),
+                        Location = catList[x].Description,
+                        ImageUrl = catList[x].Name + "/" + imagecounter + ".jpg",
+                        YearTaken = 1955,
+                        Category = (int) catList[x].Id,
                         Familie = "",
-                        Category = (int)catList[y].Id,
+                        Quality = "",
                         Series = "",
                         Spare1 = "",
                         Spare2 = "",
                         Spare3 = "",
-                    };
-                    await AddImage(test);
-                }
+                    }
+                );
             }
+            foreach (ImageDto im in imageList){ await AddImage(im); }
+            offset = counter + 1;
+            imagecounter = 0;
+            imageList.Clear();
         }
-
         return 1;
     }
 
@@ -109,29 +115,33 @@ public class Dappercategory : IDapperCategoryService
         throw new NotImplementedException();
     }
 
-    public Task AddImage(ImageDto test)
+    public async Task<int> AddImage(ImageDto test)
     {
-        var query =
-            "INSERT INTO Images (Id,ImageUrl,YearTaken,Location,Familie,Category,Series,Spare1,Spare2,Spare3)"
-            + "VALUES(@Id,@ImageUrl,@YearTaken,@Location,@Familie,@Category,@Series,@Spare1,@Spare2,@Spare3)";
-
-        var parameters = new DynamicParameters();
-
-        parameters.Add("Id", test.Id, DbType.Int32);
-        parameters.Add("ImageUrl", test.ImageUrl, DbType.String);
-        parameters.Add("YearTaken", 1955, DbType.Int32);
-        parameters.Add("Location", test.Location, DbType.String);
-        parameters.Add("Familie", "n/a", DbType.String);
-        parameters.Add("Category", test.Id, DbType.Int32);
-        parameters.Add("Series", "n/a", DbType.String);
-        parameters.Add("Spare1", "n/a", DbType.String);
-        parameters.Add("Spare2", "n/a", DbType.String);
-        parameters.Add("Spare3", "n/a", DbType.String);
-
-        using (var connection = _context.CreateConnection())
+        await Task.Run(() =>
         {
-            var id = connection.Execute(query, parameters);
-        }
-        return null;
+            var query =
+                "INSERT INTO Images (Id,ImageUrl,YearTaken,Location,Familie,Category,Series,Quality,Spare1,Spare2,Spare3)"
+                + "VALUES(@Id,@ImageUrl,@YearTaken,@Location,@Familie,@Category,@Series,@Quality,@Spare1,@Spare2,@Spare3)";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("Id", test.Id, DbType.Int32);
+            parameters.Add("ImageUrl", test.ImageUrl, DbType.String);
+            parameters.Add("YearTaken", 1955, DbType.Int32);
+            parameters.Add("Location", test.Location, DbType.String);
+            parameters.Add("Familie", "n/a", DbType.String);
+            parameters.Add("Category", test.Category, DbType.Int32);
+            parameters.Add("Series", "n/a", DbType.String);
+            parameters.Add("Quality", "n/a", DbType.String);
+            parameters.Add("Spare1", "n/a", DbType.String);
+            parameters.Add("Spare2", "n/a", DbType.String);
+            parameters.Add("Spare3", "n/a", DbType.String);
+
+            using (var connection = _context.CreateConnection())
+            {
+                var id = connection.Execute(query, parameters);
+            }
+        });
+        return 1;
     }
 }

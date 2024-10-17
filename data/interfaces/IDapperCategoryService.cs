@@ -6,6 +6,6 @@ public interface IDapperCategoryService
         public Task UpdateCategory(Category up);
         public Task DeleteCategory(int id);
         public Task<Category> CreateCategory(Category up);
-        public Task AddImage(ImageDto im);
+        public Task<int> AddImage(ImageDto im);
         public Task<int> SeedImages();
     }
