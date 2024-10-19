@@ -75,6 +75,7 @@ public class Dappercategory : IDapperCategoryService
     {
         var allCategories = await GetAllCategories();
         var _result = new List<CategoryDto>();
+        
 
         foreach (CategoryDto cat in allCategories)
         {
@@ -87,7 +88,7 @@ public class Dappercategory : IDapperCategoryService
                     help.Id = id;
                     help.Description = cat.Description;
                     help.MainPhoto =
-                        "http://localhost:5123/api/Images/getImageFile/" + cat.MainPhoto;
+                        "http://localhost:8103/api/Images/getImageFile/" + cat.MainPhoto;
                     help.Number_of_images = 0;
                     _result.Add(help);
                 }

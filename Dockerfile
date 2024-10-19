@@ -12,4 +12,4 @@ WORKDIR /App
 #COPY ./wait-for-it.sh /App/wait-for-it.sh
 #RUN chmod +x /App/wait-for-it.sh
 
-ENTRYPOINT [ "dotnet", "HospitalService.dll" ]
+ENTRYPOINT [ "dotnet", "fotoservice.dll" ]

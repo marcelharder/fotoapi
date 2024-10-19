@@ -13,23 +13,27 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
   
-  #fotoservice:
-  #  image: foto_app:v1
-  #  restart: always
-  #  ports:
-  #    - 8103:80
-  #  networks: 
-  #    - internal-container-network
-  #  volumes:
-  #    - mariadb-data:/var/lib/mysql
-  #  depends_on:
-  #    - db
-  
-  
- 
+  fotoservice:
+    image: foto_app:v1
+    restart: always
+    ports:
+      - 8103:80
+    networks: 
+      - internal-container-network
+    volumes:
+      - myapp:/nfs/mariadb_data
+    depends_on:
+      - db
+
   
 
 volumes:
+ myapp:
+   driver: local
+   driver_opts:
+      type: nfs
+      o: addr=192.168.2.41,rw
+      device: ":/nfs/mariadb_data"
  mariadb-data:
  sqldata:
 networks:
