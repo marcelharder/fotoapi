@@ -87,8 +87,7 @@ public class Dappercategory : IDapperCategoryService
                     var help = new CategoryDto();
                     help.Id = id;
                     help.Description = cat.Description;
-                    help.MainPhoto =
-                        "http://localhost:8103/api/Images/getImageFile/" + cat.MainPhoto;
+                    help.MainPhoto = cat.MainPhoto;
                     help.Number_of_images = 0;
                     _result.Add(help);
                 }

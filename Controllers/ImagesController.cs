@@ -41,7 +41,6 @@ public class ImagesController : BaseApiController
     }
 
     [HttpGet("getImageFile/{id}")]
-
     public async Task<IActionResult> getImageFile(int id)
     {
         var locationPrefix = _conf.GetValue<string>("NfsLocation");
@@ -65,6 +64,7 @@ public class ImagesController : BaseApiController
             return File(help, "image/jpg");
         }
     }
+
     [HttpGet("getFullImageFile/{id}")]
     public async Task<IActionResult> getFullImageFile(int id)
     {
@@ -76,9 +76,6 @@ public class ImagesController : BaseApiController
 
         return File(img, "image/jpg");
     }
-
-
-
 
     [HttpGet("getImagesByCategory/{cat}")]
     public async Task<ActionResult<List<ImageDto>>> GetImagesByCat(int cat)
